@@ -6,7 +6,7 @@ The goal is to create images for common tasks once in this repository, and then 
 
 ## Usage
 
-The Dockerfiles declared in this repository will produces images via automated builds on Dockerhub, and made available under e.g. `telianorge/concourse-<subdirectory>`. The
+The Dockerfiles declared in this repository will produces images via automated builds on Dockerhub, and made available under e.g. `teliaoss/concourse-<subdirectory>`. The
 images can be used in your task definition as follows:
 
 ```yml
@@ -16,7 +16,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: telianorge/concourse-python-aws
+    repository: teliaoss/concourse-python-aws
     tag: "latest"
 ...
 ```
