@@ -16,7 +16,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: teliaoss/concourse-python-aws
+    repository: teliaoss/concourse-awscli
     tag: "latest"
 ...
 ```
