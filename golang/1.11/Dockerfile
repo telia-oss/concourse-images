@@ -1,4 +1,4 @@
-FROM golang:1.10-alpine as resource
+FROM golang:1.11-alpine as resource
 RUN apk add --update \
     make \
     bash \
