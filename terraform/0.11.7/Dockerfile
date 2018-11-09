@@ -4,3 +4,5 @@ RUN apk add --update \
     && rm -rf /var/cache/apk/*
 
 FROM resource
+ENTRYPOINT [ "terraform" ]
+CMD [ "--help" ]

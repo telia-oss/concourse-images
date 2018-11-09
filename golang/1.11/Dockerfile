@@ -6,3 +6,5 @@ RUN apk add --update \
     && rm -rf /var/cache/apk/*
 
 FROM resource
+ENTRYPOINT [ "go" ]
+CMD [ "help" ]

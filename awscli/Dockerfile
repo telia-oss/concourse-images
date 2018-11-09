@@ -9,3 +9,5 @@ RUN pip install \
     awscli
 
 FROM resource
+ENTRYPOINT [ "aws" ]
+CMD [ "--version" ]

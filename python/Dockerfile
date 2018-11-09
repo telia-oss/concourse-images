@@ -10,3 +10,5 @@ RUN pip install \
     jinja2
 
 FROM resource
+ENTRYPOINT [ "python" ]
+CMD [ "--help" ]
