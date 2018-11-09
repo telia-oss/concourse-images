@@ -1,9 +1,8 @@
 FROM python:3.7-alpine as resource
-RUN apk add --update \
+RUN apk add --update --no-cache \
     git \
     zip \
-    unzip \
-    && rm -rf /var/cache/apk/*
+    unzip
 RUN pip install \
     pyyaml \
     docopt \
