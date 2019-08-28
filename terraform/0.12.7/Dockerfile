@@ -1,0 +1,9 @@
+FROM hashicorp/terraform:0.12.7 as resource
+RUN apk add --update --no-cache \
+    make \
+    curl
+RUN curl -sL https://taskfile.dev/install.sh | sh
+
+FROM resource
+ENTRYPOINT [ "terraform" ]
+CMD [ "--help" ]
