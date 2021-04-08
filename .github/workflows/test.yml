@@ -1,0 +1,26 @@
+name: Sample Run Include Syntax Json Format
+on: push
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+       matrix: ${{ steps.setmatrix.outputs.matrix }}
+    steps:
+      - name: Set Dynamic Matrix
+        id: setmatrix
+        run: |
+           matrixStringifiedObject="{\"include\":[{\"Dockerfile\":\"terraform/0.13/Dockerfile\"},{\"Dockerfile\":\"terraform/0.14/Dockerfile\"}]}"
+           echo $matrixStringifiedObject
+           echo "::set-output name=matrix::$matrixStringifiedObject"
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
+    steps:
+    - run: echo Run ${{ matrix.Dockerfile }}
+    - run: echo ${{ fromJson(needs.job1.outputs.matrix) }}
+    - run: echo ${{ needs.job1.outputs.matrix }}
+    - run: date
+    - run: sleep 1
+    - run: date
