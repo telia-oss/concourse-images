@@ -1,0 +1,82 @@
+name: Docker Image Build
+
+on: [push, pull_request]
+  
+
+jobs:
+  build_matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix_json: ${{ steps.output_data.outputs.matrix_json }}
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v2
+        
+      - name: Get Diff Action
+        uses: technote-space/get-diff-action@v4.0.1
+        with:
+          PATTERNS: |
+            ./golang/*
+          FILES: |
+            Dockerfile
+          
+      - name: set output
+        id: output_data
+        shell: bash
+        run: |
+             matrixJsonObject=$(echo $MATCHED_FILES | jq --raw-input --raw-output 'gsub("'"'"'"; "") | split(" ") | map( { Dockerfile:.} ) | { include:. } | tostring')  
+             echo "::set-output name=matrix_json::$matrixJsonObject"
+     
+  docker_image_build:
+    needs: build_matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.build_matrix.outputs.matrix_json) }}
+    steps: 
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: get version tag
+        id: versionTag
+        run: |
+          versionTag=$(head -1 ./${{ matrix.Dockerfile }} | grep  -o '[0-9.]\+' )
+          echo $versionTag
+          echo "versionTag=$versionTag" >> $GITHUB_ENV
+
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v2.3.0
+        with:
+          images: ghcr.io/SadriG91/concourse-golang
+          tags: |
+            ype=sha,enable=true,priority=100,prefix=sha-
+            ype=edge,enable=true,priority=700,branch=$repo.default_branch
+            type=semver,enable=true,priority=900,pattern={{raw}},value=v${{ env.versionTag }}    
+          labels: |
+            maintainer=Telia OSS
+            org.opencontainers.image.title=concourse-golang
+            org.opencontainers.image.description=Alpine golang toolbox for use in Concourse pipelines. 
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+          
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v2.4.0
+        with:
+          push: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }} 
+          file: ./${{ matrix.Dockerfile }} 
+          
+          
