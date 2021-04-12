@@ -1,9 +1,7 @@
 name: Docker Image Build
 
-on:
-  push:
-    branches:
-      - 'master'
+on: [push, pull_request]
+  
 
 jobs:
   build_matrix:
@@ -63,6 +61,19 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
+
+
+      - name: get version tag
+        id: versionTag
+        run: |
+          versionTag=$(head -1 ./${{ matrix.Dockerfile }} | grep  -o '[0-9.]\+' )
+          echo $versionTag
+          echo "versionTag=$versionTag" >> $GITHUB_ENV
+          
+
+      - name: check tag
+        run: echo ${{ env.versionTag }}
+
       - name: Docker meta
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v2.3.0
@@ -71,7 +82,7 @@ jobs:
           tags: |
             type=sha
             type=edge
-            type=semver,pattern={{version}}, value=v0.14.5    
+            type=semver,pattern={{version}}, value=v${{ env.versionTag }}    
                     
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
