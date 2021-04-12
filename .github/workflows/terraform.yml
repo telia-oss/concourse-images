@@ -21,13 +21,12 @@ jobs:
           FILES: |
             Dockerfile
           
-      - name: set output
+      - name: Set output
         if: env.MATCHED_FILES
         id: output_data
         shell: bash
         run: |
              matrixJsonObject=$(echo $MATCHED_FILES | jq --raw-input --raw-output 'gsub("'"'"'"; "") | split(" ") | map( { Dockerfile:.} ) | { include:. } | tostring') 
-             echo $matrixJson 
              echo "::set-output name=matrix_json::$matrixJsonObject"
      
   docker_image_build:
