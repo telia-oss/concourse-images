@@ -1,4 +1,4 @@
-name: Docker Image Build
+name: Terraform Concourse Docker Image Build
 
 on: [push, pull_request]
   
@@ -22,6 +22,7 @@ jobs:
             Dockerfile
           
       - name: set output
+        if: env.MATCHED_FILES
         id: output_data
         shell: bash
         run: |
@@ -31,6 +32,7 @@ jobs:
      
   docker_image_build:
     needs: build_matrix
+    if: needs.build_matrix.outputs.matrix_json
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.build_matrix.outputs.matrix_json) }}

@@ -1,4 +1,4 @@
-name: Docker Image Build
+name: Golang Concourse Docker Image Build
 
 on: [push, pull_request]
   
