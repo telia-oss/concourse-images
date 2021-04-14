@@ -95,7 +95,7 @@ jobs:
           
   docker_image_build_daily:
     needs: build_matrix
-    if: ! needs.build_matrix.outputs.matrix_json
+    if: "!needs.build_matrix.outputs.matrix_json"
     runs-on: ubuntu-latest
     steps: 
       - name: Check out
