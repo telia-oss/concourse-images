@@ -17,10 +17,8 @@ jobs:
         uses: technote-space/get-diff-action@v4.0.1
         with:
           PATTERNS: |
-            ./terraform/*
-          FILES: |
-            Dockerfile
-          
+            terraform/*/Dockerfile
+                  
       - name: Set output
         if: env.MATCHED_FILES
         id: output_data

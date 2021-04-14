@@ -17,10 +17,9 @@ jobs:
         uses: technote-space/get-diff-action@v4.0.1
         with:
           PATTERNS: |
-            ./golang/*
-          FILES: |
-            Dockerfile
-          
+            golang/*/Dockerfile
+
+
       - name: Set output
         if: env.MATCHED_FILES
         id: output_data

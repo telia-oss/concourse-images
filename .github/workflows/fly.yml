@@ -21,9 +21,8 @@ jobs:
         uses: technote-space/get-diff-action@v4.0.1
         with:
           PATTERNS: |
-            ./fly/*
-          FILES: |
-            Dockerfile
+            fly/Dockerfile
+
           
       - name: Set output
         if: env.MATCHED_FILES

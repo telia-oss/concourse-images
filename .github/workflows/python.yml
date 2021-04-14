@@ -20,9 +20,7 @@ jobs:
         uses: technote-space/get-diff-action@v4.0.1
         with:
           PATTERNS: |
-            ./python/*
-          FILES: |
-            Dockerfile
+            python/Dockerfile
           
       - name: Set output
         if: env.MATCHED_FILES
