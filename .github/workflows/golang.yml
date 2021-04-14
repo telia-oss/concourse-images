@@ -50,12 +50,14 @@ jobs:
         with:
          
           images: ghcr.io/SadriG91/concourse-golang         
-          #images: telia-oss/concourse-golang
-        
+          #images: teliaoss/concourse-golang
+          flavor: |
+            latest=false
           tags: |
-            type=sha,enable=true,priority=100,prefix=sha-
+            type=sha,enable=true,priority=500,prefix=sha-
             type=edge,enable=true,priority=700,branch=$repo.default_branch
-            type=semver,enable=true,priority=900,pattern={{raw}},value=v${{ env.versionTag }}    
+            type=semver,enable=false,priority=900,pattern={{raw}},value=v${{ env.versionTag }}
+            type=raw,enable=true,priority=900,value=v${{ env.versionTag }}
           labels: |
             maintainer=Telia OSS
             org.opencontainers.image.title=concourse-golang

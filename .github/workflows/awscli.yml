@@ -41,11 +41,6 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
-      - name: get version tag
-        id: versionTag
-        run: |
-          versionTag=$(head -1 ./${{ matrix.Dockerfile }} | grep  -o '[0-9.]\+' )
-          echo "versionTag=$versionTag" >> $GITHUB_ENV
 
       - name: Docker meta
         id: docker_meta
@@ -56,7 +51,7 @@ jobs:
           #images: telia-oss/concourse-awscli
           
           tags: |
-            type=sha,enable=true,priority=100,prefix=sha-
+            type=sha,enable=true,priority=500,prefix=sha-
             type=edge,enable=true,priority=700,branch=$repo.default_branch
             type=semver,enable=false,priority=900,pattern={{raw}},value=v${{ env.versionTag }}    
           labels: |
@@ -106,11 +101,12 @@ jobs:
         with:
           
           images: ghcr.io/SadriG91/concourse-awscli
-          #images: telia-oss/concourse-awscli
+          #images: teliaoss/concourse-awscli
           
           tags: |
             type=sha,enable=true,priority=100,prefix=sha-
-            type=edge,enable=true,priority=700,branch=$repo.default_branch    
+            type=edge,enable=true,priority=700,branch=$repo.default_branch
+            type=schedule,enable=true,priority=1000,pattern={{date 'YYYYMMDD'}}    
           labels: |
             maintainer=Telia OSS
             org.opencontainers.image.title=concourse-awscli
