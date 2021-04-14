@@ -49,7 +49,8 @@ jobs:
           
           images: ghcr.io/SadriG91/concourse-awscli
           #images: telia-oss/concourse-awscli
-          
+          flavor: |
+            latest=true
           tags: |
             type=sha,enable=true,priority=500,prefix=sha-
             type=edge,enable=true,priority=700,branch=$repo.default_branch
@@ -102,7 +103,8 @@ jobs:
           
           images: ghcr.io/SadriG91/concourse-awscli
           #images: teliaoss/concourse-awscli
-          
+          flavor: |
+            latest=true
           tags: |
             type=sha,enable=true,priority=100,prefix=sha-
             type=edge,enable=true,priority=700,branch=$repo.default_branch
