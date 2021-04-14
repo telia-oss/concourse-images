@@ -1,4 +1,4 @@
-FROM hashicorp/terraform:0.14.9 as resource
+FROM hashicorp/terraform:0.14.10 as resource
 RUN apk add --update --no-cache \
     ncurses \
     make \

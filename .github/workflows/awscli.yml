@@ -20,7 +20,7 @@ jobs:
         uses: technote-space/get-diff-action@v4.0.1
         with:
           PATTERNS: |
-            fly/Dockerfile
+            awscli/Dockerfile
 
           
       - name: Set output
@@ -47,13 +47,12 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2.3.0
         with:
           
-          images: ghcr.io/SadriG91/concourse-awscli
-          #images: telia-oss/concourse-awscli
+          images: teliaoss/concourse-awscli,ghcr.io/telia-oss/concourse-awscli
           flavor: |
             latest=true
           tags: |
             type=sha,enable=true,priority=500,prefix=sha-
-            type=edge,enable=true,priority=700,branch=$repo.default_branch
+            type=edge,enable=false,priority=700,branch=$repo.default_branch
             type=semver,enable=false,priority=900,pattern={{raw}},value=v${{ env.versionTag }}    
           labels: |
             maintainer=Telia OSS
@@ -66,18 +65,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         
-      # - name: Login to Dockerhub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ secrets.GHCR_USERNAME }}
-          password: ${{ secrets.GHCR_TOKEN }}  
+          username: ${{ secrets.TELIAOSS_GHCR_USERNAME }}
+          password: ${{ secrets.TELIAOSS_GHCR_TOKEN }}  
           
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.4.0
@@ -101,13 +100,12 @@ jobs:
         uses: crazy-max/ghaction-docker-meta@v2.3.0
         with:
           
-          images: ghcr.io/SadriG91/concourse-awscli
-          #images: teliaoss/concourse-awscli
+          images: teliaoss/concourse-awscli,ghcr.io/telia-oss/concourse-awscli
           flavor: |
             latest=true
           tags: |
             type=sha,enable=true,priority=100,prefix=sha-
-            type=edge,enable=true,priority=700,branch=$repo.default_branch
+            type=edge,enable=false,priority=700,branch=$repo.default_branch
             type=schedule,enable=true,priority=1000,pattern={{date 'YYYYMMDD'}}    
           labels: |
             maintainer=Telia OSS
@@ -120,18 +118,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         
-      # - name: Login to Dockerhub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ${{ secrets.GHCR_USERNAME }}
-          password: ${{ secrets.GHCR_TOKEN }}    
+          username: ${{ secrets.TELIAOSS_GHCR_USERNAME }}
+          password: ${{ secrets.TELIAOSS_GHCR_TOKEN }}    
           
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.4.0
