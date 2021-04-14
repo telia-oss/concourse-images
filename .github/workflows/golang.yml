@@ -21,11 +21,11 @@ jobs:
 
 
       - name: Set output
-        if: env.MATCHED_FILES
+        if: env.GIT_DIFF_FILTERED
         id: output_data
         shell: bash
         run: |
-             matrixJsonObject=$(echo $MATCHED_FILES | jq --raw-input --raw-output 'gsub("'"'"'"; "") | split(" ") | map( { Dockerfile:.} ) | { include:. } | tostring')  
+             matrixJsonObject=$(echo $GIT_DIFF_FILTERED | jq --raw-input --raw-output 'gsub("'"'"'"; "") | split(" ") | map( { Dockerfile:.} ) | { include:. } | tostring')  
              echo "::set-output name=matrix_json::$matrixJsonObject"
      
   docker_image_build:
@@ -53,8 +53,8 @@ jobs:
           #images: telia-oss/concourse-golang
         
           tags: |
-            ype=sha,enable=true,priority=100,prefix=sha-
-            ype=edge,enable=true,priority=700,branch=$repo.default_branch
+            type=sha,enable=true,priority=100,prefix=sha-
+            type=edge,enable=true,priority=700,branch=$repo.default_branch
             type=semver,enable=true,priority=900,pattern={{raw}},value=v${{ env.versionTag }}    
           labels: |
             maintainer=Telia OSS
