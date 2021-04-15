@@ -1,3 +1,10 @@
+[![AWScli Concourse Docker Image Build](https://github.com/telia-oss/concourse-images/actions/workflows/awscli.yml/badge.svg?branch=master)](https://github.com/telia-oss/concourse-images/actions/workflows/awscli.yml)
+[![Golang Concourse Docker Image Build](https://github.com/telia-oss/concourse-images/actions/workflows/golang.yml/badge.svg?branch=master)](https://github.com/telia-oss/concourse-images/actions/workflows/golang.yml)
+[![Python Concourse Docker Image Build](https://github.com/telia-oss/concourse-images/actions/workflows/python.yml/badge.svg?branch=master)](https://github.com/telia-oss/concourse-images/actions/workflows/python.yml)
+[![Terraform Concourse Docker Image Build](https://github.com/telia-oss/concourse-images/actions/workflows/terraform.yml/badge.svg?branch=master)](https://github.com/telia-oss/concourse-images/actions/workflows/terraform.yml)
+[![fly Cli Concourse Docker Image Build](https://github.com/telia-oss/concourse-images/actions/workflows/fly.yml/badge.svg?branch=master)](https://github.com/telia-oss/concourse-images/actions/workflows/fly.yml)
+
+
 # Concourse Images
 
 This repository contains reusable docker images for use in Concourse tasks.
