@@ -1,12 +1,12 @@
 # Concourse Images
 
-This repository contains reusable docker images for use in Concourse tasks.
+This repository contains reusable dockerfiles for use in Concourse tasks.
 
 The goal is to create images for common tasks once in this repository, and then reuse them across different projects, so that everybody benefits from each others ideas and improvements.
 
 ## Usage
 
-The Dockerfiles declared in this repository will produces images via automated builds on Dockerhub, and made available under e.g. `teliaoss/concourse-<subdirectory>`. The
+The Dockerfiles declared in this repository will produce images via automated builds on Dockerhub, and made available under e.g. `teliaoss/concourse-<subdirectory>`. The
 images can be used in your task definition as follows:
 
 ```yml
