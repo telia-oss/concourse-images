@@ -1,6 +1,6 @@
 FROM alpine:latest as resource
 
-ENV CONCOURSE_VERSION=5.5.1
+ENV CONCOURSE_VERSION=7.2.0
 
 RUN apk add --update --no-cache \
     ca-certificates \
