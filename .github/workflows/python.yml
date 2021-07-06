@@ -74,7 +74,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ secrets.TELIAOSS_GHCR_USERNAME }}
-          password: ${{ secrets.TELIAOSS_GHCR_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.4.0
@@ -125,10 +125,10 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ secrets.TELIAOSS_GHCR_USERNAME }}
-          password: ${{ secrets.TELIAOSS_GHCR_TOKEN }}  
+          password: ${{ secrets.GITHUB_TOKEN }}  
           
       - name: Build and push Docker images
-        uses: docker/build-push-action@v2.4.0
+        uses: docker/build-push-action@v2.5.0
         with:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
