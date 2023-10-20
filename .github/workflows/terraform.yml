@@ -25,6 +25,8 @@ jobs:
         run: |
              matrixJsonObject=$(echo $GIT_DIFF_FILTERED | jq --raw-input --raw-output 'gsub("'"'"'"; "") | split(" ") | map( { Dockerfile:.} ) | { include:. } | tostring') 
              echo "::set-output name=matrix_json::$matrixJsonObject"
+             echo $matrixJsonObject
+             echo $matrix_json
      
   docker_image_build:
     needs: build_matrix
@@ -39,6 +41,8 @@ jobs:
       - name: get version tag
         id: versionTag
         run: |
+          echo ${{ needs.build_matrix.outputs.matrix_json }}
+          echo ${{ fromJson(needs.build_matrix.outputs.matrix_json) }}
           versionTag=$(head -1 ./${{ matrix.Dockerfile }} | grep  -o '[0-9.]\+' )
           echo "versionTag=$versionTag" >> $GITHUB_ENV
 
